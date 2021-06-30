@@ -29,7 +29,7 @@ class Thread(models.Model):
     content = models.TextField(default="")
     upvotes = models.IntegerField(default=0)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
-    topicID = models.ManyToManyField(Topic)
+    topicID = models.ForeignKey(Topic, on_delete=models.CASCADE)
     media = models.FileField(upload_to=upload_to_Thread, max_length=256, blank=True, default='threads/default.jpg')
 
     def __str__(self):

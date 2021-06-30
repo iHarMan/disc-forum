@@ -9,23 +9,18 @@ import Register from './components/register';
 import Header from './components/header';
 import Footer from './components/footer';
 import RecipeReviewCard from './components/feed';
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
+import ThreadView from './components/singlepost';
+import ViewThread from './components/singlepost';
 
 const routing = ( 
   <Router>
     <React.StrictMode>
       <Header/>
       <Switch>
-        <Route exact path = '/' component = {App}/>
         <Route exact path = '/login' component = {Login}/>
         <Route exact path = '/register' component = {Register}/>
-        <Route exact path = '/feed' component = {RecipeReviewCard}/>
+        <Route exact path = '/' component = {RecipeReviewCard}/>
+        <Route exact path = '/single/:id' component = {ViewThread}/>
       </Switch>
       <Footer/>
     </React.StrictMode>

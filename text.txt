@@ -1,0 +1,20 @@
+-> reduce width of topic card
+-> reduce spacing
+-> increase height of the card
+-> add transparent scrolling button 
+
+
+-> topic is basically category.
+-> feed(table) mein hum sab topics aur unka latest post display karenge.
+-> card mein trending topics.
+
+
+Topic table 
+Fields=> topics |  lates post (date n time)  |   upvotes  |  author  
+	1.	  DSA	|   My experience            |   1000     |   xyz
+Eg:
+
+
+Thread and Posts: 
+Thread is the actual article. and uske neeche comments n discussion
+

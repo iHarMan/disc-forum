@@ -77,7 +77,16 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard() {
   const classes = useStyles();
   const [latestPostData, setLatestPostData] = React.useState({
-	  topicName : [],
+	  data : [
+		{
+			id : "Loading",
+			topic : "Loading",
+			title : "Loading",
+			upvotes : "Loading",
+			author : "Loading",
+			content : "Loading",
+		},
+	  ]
   });
   const [topicData, setTopicData] = React.useState([{
 	  title : "Loading...",
@@ -97,6 +106,13 @@ export default function RecipeReviewCard() {
     setExpanded(!expanded);
   };
 
+  useEffect(()=>{
+	axiosInstance.get("feed/").then((res)=>{
+		console.log(res.data);
+		setLatestPostData(res.data);
+		console.log(latestPostData);
+	});
+  }, [setLatestPostData]);
 
   useEffect(()=>{
 	  axiosInstance.get("topic/").then((res)=>{
@@ -137,4 +153,3 @@ export default function RecipeReviewCard() {
 	</ThemeProvider>
   );
 }
-

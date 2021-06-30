@@ -7,6 +7,7 @@ from .serializers import AccountSerializer, ThreadSerializer, PostSerializer, To
 from rest_framework import serializers, status, mixins, generics
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 
 class CreateUserView(generics.ListCreateAPIView):
@@ -88,21 +89,80 @@ class TopicDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins
 class FeedView(generics.GenericAPIView):
 	permission_classes = [AllowAny]
 	def get(self, request, *args, **kwargs):
-		topics = list(Topic.objects.all())
-		domain = request.get_host()
-		data = {}
-		for topic in topics:				
-			thread = Thread.objects.filter(topicID=topic.pk).order_by('-postedAt').first()
-			if thread == None:
-				data[topic.title] = 'NO THREADS'
-			else:
-				serializers = TopicSerializer()
-				print(serializers)
-				data[topic.title] = [thread.author.username, thread.postedAt, thread.upvotes, thread.title, thread.pk, "http://" + domain + "/media/{}".format(thread.media)]
-				print(topic.media)
-				data["topic_media"] = "http://" + domain + "/media/{}".format(topic.media)
-		return Response(data, status=201)
+		threads = Thread.objects.all().order_by("-postedAt")
+		ret_dict = {"data": []}
+		for thread in threads:
+			temp = {}
+			temp["topic"] = thread.topicID.title
+			temp["content"] = thread.content
+			temp["id"] = thread.pk
+			temp["title"] = thread.title
+			temp["postedAt"] = thread.postedAt
+			temp["author"] = thread.author.username
+			temp["upvotes"] = thread.upvotes
+			ret_dict["data"].append(temp)
+		return Response(ret_dict, status=201)
+		
+class ThreadView(generics.GenericAPIView):
+	permission_classes = [AllowAny]
+	def get(self, request, pk, *args, **kwargs):
+		ret_dict = {}
+		thread = Thread.objects.get(pk=pk)
+		ret_dict["thread"] = {}
+		ret_dict["thread"]["topic"] = thread.topicID.title
+		ret_dict["thread"]["content"] = thread.content
+		ret_dict["thread"]["id"] = thread.id
+		ret_dict["thread"]["title"] = thread.title
+		ret_dict["thread"]["postedAt"] = thread.postedAt
+		ret_dict["thread"]["author"] = thread.author.username
+		ret_dict["thread"]["upvotes"] = thread.upvotes
 
+		posts = Post.objects.filter(threadID=thread.pk)
+		ret_dict["posts"] = []
+		for post in posts:
+			temp = {}
+			print(post.content)
+			temp["content"] = post.content
+			temp["author"] = post.author.username
+			ret_dict["posts"].append(temp)
+		return Response(ret_dict, status=201)
 
+class TopicView(generics.GenericAPIView):
+	permission_classes = [AllowAny]
+	parser_classes = [MultiPartParser, FormParser]
+	def get(self, request, pk, *args, **kargs):
+		ret_dict = {}
+		topic = Topic.objects.get(pk=pk)
+		temp_dict = {}
+		temp_dict["id"] = topic.id
+		temp_dict["title"] = topic.title
+		temp_dict["media"] = topic.media
+		# print(request.headers["Host"])
+		topic_serializer = TopicSerializer(data=temp_dict)
+		print(topic_serializer)
+		if topic_serializer.is_valid():
+			temp = topic_serializer.data
+			temp["media"] = "http://" + request.headers["Host"] + temp["media"]
+		else:
+			temp = "No threads found"
+		# temp["title"] = topic.title
+		# temp["media"] = topic.media
+		ret_dict["topic"] = temp
+
+		threads = Thread.objects.filter(topicID=topic.pk)
+		ret_dict["threads"] = []
+		for thread in threads:
+			temp = {}
+			temp["topic"] = thread.topicID.title
+			temp["content"] = thread.content
+			temp["id"] = thread.pk
+			temp["title"] = thread.title
+			temp["postedAt"] = thread.postedAt
+			temp["author"] = thread.author.username
+			temp["upvotes"] = thread.upvotes
+			ret_dict["threads"].append(temp)
+		return Response(ret_dict, status=201)
+
+		
 
 

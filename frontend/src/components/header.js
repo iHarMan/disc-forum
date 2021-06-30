@@ -13,6 +13,8 @@ import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import SearchBar from 'material-ui-search-bar';
 
+import {isLogin, logout} from './utils';
+
 // Local imports
 import theme from './theme';
 
@@ -40,6 +42,85 @@ function Header(){
 		});
 		window.location.reload();
 	};
+	if(isLogin())
+	{
+		return (
+			<React.Fragment>
+				<ThemeProvider theme={ theme }>
+				<CssBaseline />
+				<div className="header">
+				<AppBar
+					position="static"
+					color="background"
+					elevation={0}
+					className={classes.appBar}
+				>
+					<Toolbar className={classes.toolbar}>
+						<Typography
+							variant="h6"
+							color="secondary"
+							noWrap
+							className={classes.toolbarTitle}
+						>
+							<Link
+								component={NavLink}
+								className={classes.link}
+								to="/"
+								underline="none"
+								color="secondary"
+							>
+								Blog
+							</Link>
+						</Typography>
+	
+						<SearchBar
+							value={data.search}
+							onChange={(newValue) => setData({ search: newValue })}
+							onRequestSearch={() => goSearch(data.search)}
+						/>
+	
+						{/* <nav>
+							<Link
+								color="secondary"
+								href="#"
+								className={classes.link}
+								component={NavLink}
+								to="/register"
+							>
+								Register
+							</Link>
+						</nav> */}
+						{/* <Button
+							href="#"
+							color="inherit"
+							variant="outlined"
+							className={classes.link}
+							component={NavLink}
+							to="/login"
+						>
+							Login
+						</Button> */}
+						<Button
+							href="#"
+							color="inherit"
+							variant="outlined"
+							className={classes.link}
+							component={NavLink}
+							to="/logout"
+							onClick = {()=>{
+								logout();
+								window.location.reload();
+							}}
+						>
+							Logout
+						</Button>
+					</Toolbar>
+				</AppBar>
+				</div>
+				</ThemeProvider>
+			</React.Fragment>
+		);
+	}
 	return (
 		<React.Fragment>
             <ThemeProvider theme={ theme }>
@@ -96,7 +177,7 @@ function Header(){
 					>
 						Login
 					</Button>
-					<Button
+					{/* <Button
 						href="#"
 						color="inherit"
 						variant="outlined"
@@ -105,7 +186,7 @@ function Header(){
 						to="/logout"
 					>
 						Logout
-					</Button>
+					</Button> */}
 				</Toolbar>
 			</AppBar>
             </div>
