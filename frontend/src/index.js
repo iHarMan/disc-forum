@@ -11,9 +11,8 @@ import Footer from './components/footer';
 import RecipeReviewCard from './components/feed';
 import MyThreads from './components/mythreads';
 import UserProfile from './components/profile';
-import ThreadView from './components/singlepost';
 import ViewThread from './components/singlepost';
-import MyThread from './components/mythreads';
+import CreatePost from './components/createPost';
 
 const routing = ( 
   <Router>
@@ -26,6 +25,7 @@ const routing = (
         <Route exact path = '/single/:id' component = {ViewThread}/>
         <Route exact path = '/myprofile/' component = {UserProfile}/>
         <Route exact path = '/mythreads/' component = {MyThreads}/>
+        <Route exact path = '/createthread/' component = {CreatePost} />
       </Switch>
       <Footer/>
     </React.StrictMode>
