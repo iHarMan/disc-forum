@@ -25,4 +25,4 @@ Next task:
 -> profile page pe graph
 -> create thread banana hai
 -> theme settle karna hai
--> 
+-> file upload dekhna hai, in createPost
