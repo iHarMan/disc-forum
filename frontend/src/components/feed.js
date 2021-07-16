@@ -22,9 +22,9 @@ import TopicTable from './topic';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 2650,
-	marginLeft: theme.spacing(1),
-	marginRight: theme.spacing(1),
-	display: 'flex',
+	  marginLeft: theme.spacing(1),
+	  marginRight: theme.spacing(1),
+	  display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
@@ -121,6 +121,7 @@ export default function RecipeReviewCard() {
 		  console.log(topicData);
 	  });
   }, [setTopicData]);
+  // window.location.reload(true);
   return (
 	  <ThemeProvider theme={theme}>
 		<CssBaseline/>

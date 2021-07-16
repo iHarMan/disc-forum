@@ -18,3 +18,11 @@ Eg:
 Thread and Posts: 
 Thread is the actual article. and uske neeche comments n discussion
 
+
+
+Next task:
+-> mythreads pe dropdown pe latest 5 posts/comments show karne hain
+-> profile page pe graph
+-> create thread banana hai
+-> theme settle karna hai
+-> 

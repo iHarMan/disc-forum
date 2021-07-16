@@ -4,6 +4,9 @@ from django.db.models.deletion import CASCADE
 import datetime
 # Create your models here.
 
+def upload_to_Profile(instance, filename):
+    return 'profile/{filename}'.format(filename=filename)
+
 def upload_to_Topic(instance, filename):
     return 'topics/{filename}'.format(filename=filename)
 

@@ -1,17 +1,9 @@
 import React from 'react';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { useParams } from 'react-router';
-import IconButton from '@material-ui/core/IconButton';
-import { red } from '@material-ui/core/colors';
 import Paper from '@material-ui/core/Paper';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../axios';
-
-//gridlist
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 // Local imports
 import theme from './theme';

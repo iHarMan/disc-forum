@@ -1,3 +1,4 @@
+from os import read, stat
 from rest_framework import serializers
 from rest_framework.fields import empty
 from .models import Profile, Thread, Post, Topic
@@ -8,7 +9,8 @@ class AccountSerializer(serializers.ModelSerializer):
     class ProfileSerailizer(serializers.ModelSerializer):
         class Meta:
             model = Profile
-            fields = []
+            # read_only_fields = ['userID']
+            fields = ('__all__')
 
     profile = ProfileSerailizer(required=False)
 

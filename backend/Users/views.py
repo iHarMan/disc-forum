@@ -1,4 +1,6 @@
+from os import stat
 from django.contrib.auth.models import User
+from django.db.models import query
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from rest_framework import response
@@ -163,6 +165,26 @@ class TopicView(generics.GenericAPIView):
 			ret_dict["threads"].append(temp)
 		return Response(ret_dict, status=201)
 
-		
+class ProfileView(generics.GenericAPIView):
+	permission_classes = [IsAuthenticated]
+	def get(self, request):
+		ret_dict = {}
+		profile = Profile.objects.get(userID=request.user)
+		ret_dict["username"] = profile.userID.username
+		ret_dict["organisation"] = profile.organisation
+		ret_dict["upvotesGiven"] = profile.likesGiven
+		# ret_dict["photo"] = profile.photo
 
+		# profile_serializer = ProfileSerializer(data=ret_dict)
+		# print(profile_serializer)
+		# if profile_serializer.is_valid():
+		# ret_dict["photo"] = "http://" + request.headers["Host"] + str(ret_dict["photo"])
+		# else:
+		return Response(ret_dict, status=200)
 
+class MyThreadView(generics.ListAPIView):
+	serializer_class = ThreadSerializer
+	permission_classes = [IsAuthenticated]
+	def get_queryset(self):
+		user = self.request.user
+		return Thread.objects.all().filter(author=user)
