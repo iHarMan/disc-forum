@@ -44,6 +44,7 @@ class ThreadDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixin
 	def delete(self, request, *args, **kwargs):
 		return self.destroy(request, *args, **kwargs)
 
+
 class PostListCreateView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer

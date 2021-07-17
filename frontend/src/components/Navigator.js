@@ -28,8 +28,8 @@ const categories = [
     id: 'Navigate',
     children: [
       { id: 'Home', icon: <HomeIcon />, active: true, to: '/' },
-      { id: 'Create Threads', icon: <CreateIcon />, to: '/' },
-      { id: 'My Threads', icon: <DescriptionIcon />, to: '/' },
+      { id: 'Create Threads', icon: <CreateIcon />, to: '/createthread' },
+      { id: 'My Threads', icon: <DescriptionIcon />, to: '/mythreads' },
     ],
   },
 ];

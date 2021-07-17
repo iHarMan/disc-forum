@@ -18,7 +18,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import theme from './theme';
 import { useEffect, useState } from 'react';
-
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 import axiosInstance from '../axios';
 
@@ -43,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  paper: {
+    margin: theme.spacing(4),
+    padding: theme.spacing(2),
+    color: '#1e1e1e'
+  }
 }));
 
 export default function MyThreads() {
@@ -55,6 +61,7 @@ export default function MyThreads() {
     upvotes: 100,
     media: "##",
     author: 4,
+    expanded: false,
   }]);
 
   useEffect(()=>{
@@ -81,7 +88,11 @@ export default function MyThreads() {
   return (
 	<ThemeProvider theme={theme}>
 	<CssBaseline/>
-    {myThreads.map((thread)=>(
+  <Paper className={classes.paper}>
+    <Grid container scrollable spacing={2}>
+    {myThreads.map((thread)=>{
+      return (
+      <Grid item xs={3}>
       <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -98,12 +109,12 @@ export default function MyThreads() {
         title = {thread.title}
         
         // subheader="September 14, 2016"
-        subheader = {thread.postedAt.substr(0,10)}
+        subheader = {thread.postedAt.substr(0, 10)}
       />
       <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
+        image={thread.media}
+        title={thread.title}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -130,8 +141,8 @@ export default function MyThreads() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
+          <Typography paragraph>{thread.content}</Typography>
+          {/* <Typography paragraph>
             Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
             minutes.
           </Typography>
@@ -152,12 +163,14 @@ export default function MyThreads() {
           </Typography>
           <Typography>
             Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
+          </Typography> */}
         </CardContent>
       </Collapse>
     </Card>
-    ))}
-      
+    </Grid>
+    );})}
+    </Grid>
+    </Paper>
 	</ThemeProvider>
   );
 }

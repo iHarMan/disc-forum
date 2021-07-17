@@ -15,7 +15,9 @@ import { MenuItem } from '@material-ui/core';
 
 // Axios
 
+import axios from 'axios';
 import axiosInstance from '../axios';
+import { baseurl } from '../axios';
 
 // Theme
 
@@ -49,19 +51,22 @@ export default function CreatePost() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [topicName, setTopicName] = useState("Select Topic");
+    const [userData, setUserData] = useState(0);
+    const [media, setMedia] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const data = new FormData();
+  // const data = new FormData();
+  const [formData, setFormData] = useState({});
   const handleClose = (event) => {
     setAnchorEl(null);
-    // setFormData({
-    //     ...formData,
-    //     id: event.target.id
-    // });
-    data.set('topicID', event.target.id);
+    setFormData({
+        ...formData,
+        id: event.target.id
+    });
+    // data.set('topicID', event.target.id);
     setTopicName(event.target.title);
   };
 
@@ -74,36 +79,35 @@ export default function CreatePost() {
 
     const onFileChange = (e) => {
         e.preventDefault();
-        // setFormData({
-        //     ...formData,
-        //     media: e.target.files[0],
-        // });
-        data.set('media', e.target.files[0]);
+        setMedia({
+          "media": e.target.files,
+        })
+        // data.set('media', e.target.files[0]);
     }
 
     const onTitleChange = (e) => {
         console.log(e.target.value);
-        // setFormData({
-        //     ...formData,
-        //     title: e.target.value,
-        // })
-        data.set('title', e.target.value);
+        setFormData({
+            ...formData,
+            title: e.target.value,
+        })
+        // data.set('title', e.target.value);
     }
 
     const onContentChange = (e) => {
         try {
-            // setFormData({
-            //     ...formData,
-            //     content: e.value.content.content[0].content.content[0].text
-            // })
-            data.set('content', e.value.content.content[0].content.content[0].text);
+            setFormData({
+                ...formData,
+                content: e.value.content.content[0].content.content[0].text
+            })
+            // data.set('content', e.value.content.content[0].content.content[0].text);
         } catch (e) {
             console.log(e);
-            // setFormData({
-            //     ...formData,
-            //     content: ""
-            // })
-            data.set('content', "");
+            setFormData({
+                ...formData,
+                content: ""
+            })
+            // data.set('content', "");
         }
     }
 
@@ -112,22 +116,31 @@ export default function CreatePost() {
             console.log(res.data);
             setTopics(res.data);
         })
-    }, [setTopics]);
+        axiosInstance.get("viewprofile/").then((res) => {
+          console.log(res.data);
+          setUserData(res.data);
+        })
+    }, [setTopics, setUserData]);
 
-    const handleSubmit = () => {
-        for(var key in data.entries()) {
-            console.log(key + " " + data[key]);
-        }
-        axiosInstance.post("thread/", 
-            data, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            }
-        ).then((res) => {
-            console.log(res);
+    const handleSubmit = (e) => {
+      e.preventDefault();
+        // for(var key in data.entries()) {
+        //     console.log(key + " " + data[key]);
+        // }
+        console.log(formData);
+        let data = new FormData();
+        data.append('title', formData.title);
+        data.append('content', formData.content);
+        data.append('topicID', parseInt(formData.id));
+        data.append('author', parseInt(userData.id));
+        data.append('media', media.media[0]);
+        const config = { headers: { 'Content-Type' : 'multipart/form-data', Authorization : localStorage.getItem('access_token') ?
+        'JWT ' + localStorage.getItem('access_token') : 
+            'null' } };
+        axiosInstance.post('thread/', data).then((res) => {
+          console.log(res.data);
         }).catch((err) => {
-            console.log(err);
+          console.log(err);
         })
     }
 

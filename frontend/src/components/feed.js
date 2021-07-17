@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function FeedView() {
   const classes = useStyles();
   const [latestPostData, setLatestPostData] = React.useState({
 	  data : [

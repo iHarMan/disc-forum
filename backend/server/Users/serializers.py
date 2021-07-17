@@ -31,8 +31,8 @@ class AccountSerializer(serializers.ModelSerializer):
 class ThreadSerializer(serializers.ModelSerializer):	
     class Meta:
         model = Thread
-        # fields = ('__all__')
-        exclude = ['upvotes', 'postedAt']
+        fields = ('__all__')
+        # exclude = ['upvotes', 'postedAt']
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:

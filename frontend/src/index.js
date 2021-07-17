@@ -8,7 +8,7 @@ import Login from './components/login';
 import Register from './components/register';
 import Header from './components/header';
 import Footer from './components/footer';
-import RecipeReviewCard from './components/feed';
+import FeedView from './components/feed';
 import MyThreads from './components/mythreads';
 import UserProfile from './components/profile';
 import ViewThread from './components/singlepost';
@@ -21,7 +21,7 @@ const routing = (
       <Switch>
         <Route exact path = '/login' component = {Login}/>
         <Route exact path = '/register' component = {Register}/>
-        <Route exact path = '/' component = {RecipeReviewCard}/>
+        <Route exact path = '/' component = {FeedView}/>
         <Route exact path = '/single/:id' component = {ViewThread}/>
         <Route exact path = '/myprofile/' component = {UserProfile}/>
         <Route exact path = '/mythreads/' component = {MyThreads}/>
