@@ -29,14 +29,15 @@ class AccountSerializer(serializers.ModelSerializer):
         return user_instance
 
 class ThreadSerializer(serializers.ModelSerializer):	
-	class Meta:
-		model = Thread
-		fields = ('__all__')
+    class Meta:
+        model = Thread
+        # fields = ('__all__')
+        exclude = ['upvotes', 'postedAt']
 
 class PostSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Post
-		fields = ('__all__')
+    class Meta:
+        model = Post
+        fields = ('__all__')
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:

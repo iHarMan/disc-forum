@@ -24,6 +24,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ThreadListCreateView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
 	queryset = Thread.objects.all()
 	serializer_class = ThreadSerializer
+	parser_classes = [MultiPartParser, FormParser]
 	permission_classes = [IsAuthenticated]
 
 	def get(self, request, *args, **kwargs):
@@ -170,6 +171,7 @@ class ProfileView(generics.GenericAPIView):
 	def get(self, request):
 		ret_dict = {}
 		profile = Profile.objects.get(userID=request.user)
+		ret_dict["id"] = profile.userID.pk
 		ret_dict["username"] = profile.userID.username
 		ret_dict["organisation"] = profile.organisation
 		ret_dict["upvotesGiven"] = profile.likesGiven
