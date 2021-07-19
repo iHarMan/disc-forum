@@ -26,3 +26,12 @@ Next task:
 -> create thread banana hai
 -> theme settle karna hai
 -> file upload dekhna hai, in createPost
+
+
+
+
+Styling:
+-> feed mein table ka link ka alignment
+-> singlepost mein author ka profile visit
+-> register mein organisation ka entry
+-> profile page mein organisation display

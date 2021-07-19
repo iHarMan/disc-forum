@@ -16,16 +16,30 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: '36ch',
-    backgroundColor: '#12548E',
+    backgroundColor: '#d8c3a5',
+    margin: theme.spacing(2),
+    padding: theme.spacing(2),
+    alignItems: 'center',
+  },
+  paper: {
+    alignItems: 'center',
+    justify: 'center',
+    backgroundColor: '#d8c3a5',
+    margin: theme.spacing(2),
+    padding: theme.spacing(1)
   },
   inline: {
     display: 'inline',
   },
+  comment: {
+    backgroundColor: "#e98074",
+  }
 }));
 
 export default function ViewThread(props){
@@ -39,6 +53,7 @@ export default function ViewThread(props){
     postedAt: "2020-01-01T09:00:00Z",
     author: "Loading...",
     upvotes: 10,
+    media: null
   });
   const [post, setPost] = useState([{
       content: "Loading...",
@@ -57,30 +72,39 @@ export default function ViewThread(props){
 		<>
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Paper>
+        <Container >
+          <Paper className={classes.paper}>
             <Container>
-              <Typography variant="h6">
+              <Typography variant="h3">
                 {thread.title}
               </Typography>
             </Container>
             <Container>
+              <Typography component='div' variant='h6'>
               {thread.content}
+              </Typography>
             </Container>
-            <Container>
-              {thread.author}
+            <Container style={{margin: theme.spacing(2)}} align="right">
+              <Link >
+                <Typography style={{ color: "#e85a4f"}}>
+                    {thread.author}
+                </Typography>
+              </Link>
             </Container>
             {/* Comments/Posts below the Thread */}
-            <List className={classes.root}>
+            <List className={classes.comment}>
               {post.map((pos)=>{
                 return (
-                  <ListItem alignItems="flex-start">
+                  <ListItem alignItems="flex-start" style={{ margin: theme.spacing(2) }}>
                   <ListItemAvatar>
-                    <Avatar alt={pos.author} src="/static/images/avatar/1.jpg" />
+                    <Avatar alt={pos.author} src={thread.media} style={{ margin: theme.spacing(-1.5) }}/>
                   </ListItemAvatar>
                   <ListItemText
                     secondary={
                       <React.Fragment>
+                        <Typography style={{ color: "#d8c3a5" }} component="div" variant="h8" >
                         {pos.content}
+                        </Typography>
                       </React.Fragment>
                     }
                   />
@@ -90,6 +114,7 @@ export default function ViewThread(props){
               })}              
               </List>
           </Paper>
+          </Container>
         </CssBaseline>
       </ThemeProvider>
 		</>

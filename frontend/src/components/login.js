@@ -21,11 +21,6 @@ import Container from '@material-ui/core/Container';
 
 import theme from './theme';
 
-const darkTheme = createMuiTheme({
-	palette: {
-    	type: 'dark',
-  	},	
-})
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,20 +28,20 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-		color: "#e2b714",
+		color: "#e85a4f",
     },
     avatar: {
         width: theme.spacing(5),
-        backgroundColor: "#e2b714",
+        backgroundColor: "#e85a4f",
     },
     form: {
         width: '100%',
         marginTop: theme.spacing(1),
-		color: "#e2b714",
+		color: "#e85a4f",
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-		backgroundColor: "#e2b714",
+		backgroundColor: "#e85a4f",
     },
 }));
 

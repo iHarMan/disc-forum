@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -14,12 +15,20 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Button from '@material-ui/core/Button';
+import LinkIcon from '@material-ui/icons/Link';
+import Container from '@material-ui/core/Container';
 
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
       borderBottom: 'unset',
     },
+    primary: "#e98074",
+  },
+  topicTable: {
+    backgroundColor: "#d8c3a5",
+    primary: "#e98074"
   },
 });
 
@@ -28,6 +37,8 @@ function Row(props) {
   const { id, post } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
+  const history = useHistory();
+  console.log(post);
 
   return (
     <React.Fragment>
@@ -37,76 +48,41 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell style={{ color: "#E85A4F" }} component="th" scope="row">
           {post.title}
         </TableCell>
-        <TableCell align="right">{post.topic}</TableCell>
-        <TableCell align="right">{post.upvotes}</TableCell>
-        <TableCell align="right">{post.author}</TableCell>
+        <TableCell style={{ color: "#E85A4F" }} align="right">{post.topic}</TableCell>
+        <TableCell style={{ color: "#E85A4F" }} align="right">{post.upvotes}</TableCell>
+        <TableCell style={{ color: "#E85A4F" }} align="right">{post.author}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="h8" gutterBottom component="div">
-                {post.content.toString().substr(0, 100)+"..."}
-              </Typography>
-              {/* <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead> */}
-                {/* <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody> */}
-              {/* </Table> */}
-            </Box>
-          </Collapse>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box margin={1}>
+                  <Typography variant="h8" gutterBottom component="div">
+                    {post.content.toString().substr(0, 100)+"..."}                    
+                  </Typography>
+                <Button
+                align="right"
+                onClick={() => {history.push("/single/" + post.id)}}>
+                  <LinkIcon />
+                </Button>                
+              </Box>
+            </Collapse>
         </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
+    </TableRow>
+  </React.Fragment>
+);
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
 
 
 export default function TopicTable(props) {
+  const classes = useRowStyles();
 	console.log(props);
 	const posts = props.posts
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.topicTable}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>

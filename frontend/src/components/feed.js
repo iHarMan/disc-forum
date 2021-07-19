@@ -28,23 +28,25 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    flexWrap: 'nowrap',
+    flexWrap: 'nowrap', // to get all in one line with scrolling
+
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
   media: {
     height: 0,
-    paddingTop: '52.3%', 
+    paddingTop: '52.3%',
+    // paddingTop: '82.3%', 
+
   },
   title: {
-    color: theme.palette.primary.light,
+    // color: theme.palette.primary.light,
+    // color: '#e98074'
   },
   titleBar: {
-    background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -66,12 +68,16 @@ const useStyles = makeStyles((theme) => ({
 	  marginBottom: theme.spacing(2),
 	  paddingTop: theme.spacing(1),
 	  paddingBottom: theme.spacing(1),
-	  backgroundColor: "#282C2E",
+    backgroundColor: "#D8C3A5"
+	  // backgroundColor: theme.palette.background,
   },
   topic: {
-	marginLeft: theme.spacing(2),
-	marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
   },
+  topictable: {
+    backgroundColor: '#8E8D8A',
+  }
 }));
 
 export default function FeedView() {
@@ -85,6 +91,7 @@ export default function FeedView() {
 			upvotes : "Loading",
 			author : "Loading",
 			content : "Loading",
+      postedAt: "Loading..."
 		},
 	  ]
   });
@@ -127,7 +134,7 @@ export default function FeedView() {
 		<CssBaseline/>
 		<Paper className={classes.paper}>
 		<div className={classes.root}>
-      <GridList className={classes.gridList} cols={2.5}>
+      <GridList className={classes.gridList} cols={4}>
         {topicData.map((topic) => (
           <GridListTile key={topic.id}>
             <img src={topic.media} alt={topic.title} />
@@ -149,7 +156,7 @@ export default function FeedView() {
     </div>
 	</Paper>
 	<div className={classes.topic}>
-		<TopicTable posts={latestPostData}/>
+		<TopicTable posts={latestPostData} className={classes.topictable}/>
 	</div>
 	</ThemeProvider>
   );

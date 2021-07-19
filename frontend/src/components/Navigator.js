@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -22,6 +23,10 @@ import CreateIcon from '@material-ui/icons/Create';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+
+// Axios
+
+import axiosInstance from '../axios';
 
 const categories = [
   {
@@ -47,11 +52,11 @@ const styles = (theme) => ({
     paddingBottom: 1,
     color: 'rgba(255, 255, 255, 0.7)',
     '&:hover,&:focus': {
-      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+      backgroundColor: '#e98074',
     },
   },
   itemCategory: {
-    backgroundColor: '#232f3e',
+    backgroundColor: '#e85a4f',
     boxShadow: '0 -1px 0 #404854 inset',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -61,7 +66,7 @@ const styles = (theme) => ({
     color: theme.palette.common.white,
   },
   itemActiveItem: {
-    color: '#4fc3f7',
+    color: '#e98074',
   },
   itemPrimary: {
     fontSize: 'inherit',
@@ -78,11 +83,23 @@ const styles = (theme) => ({
 function Navigator(props) {
   const { classes, ...other } = props;
   const history = useHistory();
+
+  const [user, setUser] = useState({
+    username: "Loading..",
+    organisation: "Loading...",
+  });
+
+  useEffect(() => {
+    axiosInstance.get('viewprofile/').then((res) => {
+      setUser(res.data);
+    })
+  })
+
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
-          Blog
+          {user.organisation}
         </ListItem>
         <ListItem className={clsx(classes.item, classes.itemCategory)}>
           <ListItemIcon className={classes.itemIcon}>
@@ -93,7 +110,7 @@ function Navigator(props) {
               primary: classes.itemPrimary,
             }}
           >
-            My Profile
+            {user.username}
           </ListItemText>
         </ListItem>
         {categories.map(({ id, children }) => (

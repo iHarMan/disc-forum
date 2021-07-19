@@ -12,9 +12,10 @@ import Header from './header';
 let theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#63ccff',
-      main: '#009be5',
+      light: '#eae7dc',
+      main: '#eae7dc',
       dark: '#006db3',
+      backgroundColor: "#eae7dc",
     },
   },
   typography: {
@@ -44,7 +45,7 @@ theme = {
   overrides: {
     MuiDrawer: {
       paper: {
-        backgroundColor: '#18202c',
+        backgroundColor: '#8e8d8a',
       },
     },
     MuiButton: {
@@ -93,7 +94,7 @@ theme = {
     },
     MuiDivider: {
       root: {
-        backgroundColor: '#404854',
+        backgroundColor: '#ffffff',
       },
     },
     MuiListItemText: {
@@ -103,7 +104,7 @@ theme = {
     },
     MuiListItemIcon: {
       root: {
-        color: 'inherit',
+        color: '#e98074',
         marginRight: 0,
         '& svg': {
           fontSize: 20,
@@ -123,9 +124,9 @@ const drawerWidth = 256;
 
 const styles = {
 	palette : {
-		type : 'dark', 
+		// type : 'dark', 
 		primary : {
-			main : '#12548E',
+			main : '#d8c3a5',
 		},
 		secondary : {
 			main : '#22C5A2',
@@ -134,7 +135,7 @@ const styles = {
 			main : red.A400,
 		},
 		background : {
-			default : '#1E1E1E',
+			default : '#d8c3a5',
 		},
 	},
   root: {
@@ -155,7 +156,7 @@ const styles = {
   main: {
     flex: 1,
     padding: theme.spacing(6, 4),
-    background: '#eaeff1',
+    backgroundColor: '#eae7dc',
   },
   footer: {
     padding: theme.spacing(2),

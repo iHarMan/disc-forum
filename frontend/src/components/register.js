@@ -32,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		color: "#e2b714",
+		color: "#e85a4f",
 	},
 	avatar: {
 		margin: theme.spacing(1),
-		backgroundColor: "#e2b714",
+		backgroundColor: "#e85a4f",
 	},
 	form: {
 		width: '100%', 
@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	submit: {
 		margin: theme.spacing(3, 0, 2),
-		backgroundColor: "#e2b714"
+		backgroundColor: "#e85a4f"
 	},
 	text: {
-		textEmphasisColor: "#e2b714",
+		textEmphasisColor: "#e85a4f",
 	}
 }));
 
@@ -82,7 +82,10 @@ export default function SignUp() {
 				history.push('/login');
 				console.log(res);
 				console.log(res.data);
-			});
+			})
+			.catch((err) => {
+				alert("Detials are incorrect or user exists!");
+			})
 	};
 
 	const classes = useStyles();

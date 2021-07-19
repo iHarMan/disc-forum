@@ -12,7 +12,8 @@ import { NavLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import SearchBar from 'material-ui-search-bar';
-
+// import Icon from 'material-ui/core/Icon';
+import PersonIcon from '@material-ui/icons/Person';
 import {isLogin, logout} from './utils';
 
 // Local imports
@@ -24,11 +25,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 	link: {
 		margin: theme.spacing(1, 1.5),
-		color: '#22C5A2',
+		color: '#e85a4f',
 	},
 	toolbarTitle: {
 		flexGrow : 1,
 	},
+	newTheme: {
+		backgroundColor: "#d8c3a5",
+		textColor: "#e98074",
+		flexGrow: 1,
+	}
 }));
 
 function Header(){
@@ -46,21 +52,21 @@ function Header(){
 	{
 		return (
 			<React.Fragment>
-				<ThemeProvider theme={ theme }>
-				<CssBaseline />
-				<div className="header">
+				{/* <ThemeProvider theme={ theme }> */}
+				{/* <CssBaseline /> */}
+				<div className={classes.newTheme}>
 				<AppBar
 					position="static"
-					color="background"
+					color="backgroundColor"
 					elevation={0}
-					className={classes.appBar}
+					className={classes.newTheme}
 				>
-					<Toolbar className={classes.toolbar}>
+					<Toolbar className={classes.newTheme}>
 						<Typography
 							variant="h6"
-							color="secondary"
+							color="background"
 							noWrap
-							className={classes.toolbarTitle}
+							className={classes.newTheme}
 						>
 							<Link
 								component={NavLink}
@@ -78,31 +84,9 @@ function Header(){
 							onChange={(newValue) => setData({ search: newValue })}
 							onRequestSearch={() => goSearch(data.search)}
 						/>
-	
-						{/* <nav>
-							<Link
-								color="secondary"
-								href="#"
-								className={classes.link}
-								component={NavLink}
-								to="/register"
-							>
-								Register
-							</Link>
-						</nav> */}
-						{/* <Button
-							href="#"
-							color="inherit"
-							variant="outlined"
-							className={classes.link}
-							component={NavLink}
-							to="/login"
-						>
-							Login
-						</Button> */}
 						<Button
 							href="#"
-							color="inherit"
+							color="textColor"
 							variant="outlined"
 							className={classes.link}
 							component={NavLink}
@@ -114,37 +98,48 @@ function Header(){
 						>
 							Logout
 						</Button>
+            {/* <Button
+							href="#"
+							color="textColor"
+							variant="outlined"
+							className={classes.link}
+							component={NavLink}
+							to="/myprofile"
+						>
+					
+						</Button> */}
+            <Button href="/myprofile" variant="outline">
+              <PersonIcon style={{fontSize:'35', color:"#e85a4f"}}/>
+            </Button>
+            
 					</Toolbar>
 				</AppBar>
 				</div>
-				</ThemeProvider>
 			</React.Fragment>
 		);
 	}
 	return (
 		<React.Fragment>
-            <ThemeProvider theme={ theme }>
-			<CssBaseline />
-            <div className="header">
+            <div className="header" className={classes.newTheme}>
 			<AppBar
 				position="static"
-				color="background"
+				color="backgroundColor"
 				elevation={0}
-				className={classes.appBar}
+				className={classes.newTheme}
 			>
-				<Toolbar className={classes.toolbar}>
+				<Toolbar className={classes.newTheme}>
 					<Typography
 						variant="h6"
-						color="secondary"
+						color="textColor"
 						noWrap
-						className={classes.toolbarTitle}
+						className={classes.newTheme}
 					>
 						<Link
 							component={NavLink}
                             className={classes.link}
 							to="/"
 							underline="none"
-							color="secondary"
+							color="textColor"
 						>
 							Blog
 						</Link>
@@ -158,7 +153,7 @@ function Header(){
 
 					<nav>
 						<Link
-							color="secondary"
+							color="textColor"
 							href="#"
 							className={classes.link}
 							component={NavLink}
@@ -169,7 +164,7 @@ function Header(){
 					</nav>
 					<Button
 						href="#"
-						color="inherit"
+						color="textColor"
 						variant="outlined"
 						className={classes.link}
 						component={NavLink}
@@ -190,7 +185,6 @@ function Header(){
 				</Toolbar>
 			</AppBar>
             </div>
-            </ThemeProvider>
 		</React.Fragment>
 	);
 }

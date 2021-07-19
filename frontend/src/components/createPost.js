@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
         margin: theme.spacing(15)
     }
+    
 }))
 
 export default function CreatePost() {
@@ -67,7 +68,11 @@ export default function CreatePost() {
         id: event.target.id
     });
     // data.set('topicID', event.target.id);
-    setTopicName(event.target.title);
+    if (event.target.title == ""){
+      setTopicName("Select Topic");
+    } else {
+      setTopicName(event.target.title);
+    }
   };
 
     
@@ -237,7 +242,7 @@ export default function CreatePost() {
             <input id="media" name="media" type="file" onChange={onFileChange} />
         </Grid>
         <Grid>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            <Button aria-controls="simple-menu" variant="outline" aria-haspopup="true" onClick={handleClick} style={{ color: "#e85a4f" }}>
                 { topicName }
                 </Button>
                 <Menu
@@ -263,7 +268,7 @@ export default function CreatePost() {
         </Grid> */}
       </Grid>
       <Grid item xs={12} sm={6}>
-          <Button 
+          <Button style={{color:"#e85a4f"}}
             endIcon={<SendIcon />}
             onClick={handleSubmit}
           >Post</Button>
