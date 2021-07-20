@@ -4,6 +4,10 @@ import { useParams } from 'react-router';
 import Paper from '@material-ui/core/Paper';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../axios';
+import { TextField } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import SendIcon from '@material-ui/icons/Send';
 
 // Local imports
 import theme from './theme';
@@ -45,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ViewThread(props){
   const classes = useStyles();
   const {id} = useParams();
+  const [author, setAuthor] = useState(0);
   const [thread, setThread] = useState({
     topic: "DSA top 50",
     content: "Loading...",
@@ -59,6 +64,23 @@ export default function ViewThread(props){
       content: "Loading...",
       author: "Loading...",
   }]);
+  const [comment, setComment] = useState("");
+
+  const handlePostChange = (e) => {
+    console.log(e.target.value);
+    setComment(e.target.value);
+  }
+
+  const handlePostSubmit = () => {
+    axiosInstance.post('/createpost/', {
+      content: comment,
+      threadID: id,
+      author: author,
+    }).then((res) => {
+      console.log(res);
+      window.location.reload();
+    })
+  }  
 
   useEffect(()=>{
     axiosInstance.get("viewthread/"+id).then((res)=>{
@@ -66,7 +88,10 @@ export default function ViewThread(props){
       setThread(res.data.thread);
       setPost(res.data.posts);
     });
-  }, [setThread, setPost]);
+    axiosInstance.get("viewprofile/").then((res)=>{
+      setAuthor(res.data.id);
+    })
+  }, [setThread, setPost, setAuthor]);
 
 	return (
 		<>
@@ -86,7 +111,7 @@ export default function ViewThread(props){
             </Container>
             <Container style={{margin: theme.spacing(2)}} align="right">
               <Link >
-                <Typography style={{ color: "#e85a4f"}}>
+                <Typography style={{ color: "#e85a4f" }}>
                     {thread.author}
                 </Typography>
               </Link>
@@ -98,6 +123,9 @@ export default function ViewThread(props){
                   <ListItem alignItems="flex-start" style={{ margin: theme.spacing(2) }}>
                   <ListItemAvatar>
                     <Avatar alt={pos.author} src={thread.media} style={{ margin: theme.spacing(-1.5) }}/>
+                    <Typography style={{ fontSize:11, marginTop:theme.spacing(2), marginLeft:theme.spacing(-1.20)}}>
+                        {pos.author}
+                    </Typography>
                   </ListItemAvatar>
                   <ListItemText
                     secondary={
@@ -111,10 +139,30 @@ export default function ViewThread(props){
                   <Divider variant="inset" component="li" /> 
                   </ListItem>
                 )
-              })}              
+              })}
               </List>
           </Paper>
+          <TextField
+            id="filled-basic"
+            label="Add Comment"
+            multiline
+            maxRows={4}
+            variant="filled"
+            color="#e85a4f"
+            onChange={handlePostChange}
+            style={{ width: "80%", marginLeft:theme.spacing(8.75), color: "#e85a4f"}}
+          />
+          <Button
+            // onClick={}
+            variant="filled"
+            style={{ margin:"0.55rem", color: "#e85a4f" }}
+            endIcon={<SendIcon />}
+            onClick={handlePostSubmit}
+          >
+            Post
+            </Button>
           </Container>
+          
         </CssBaseline>
       </ThemeProvider>
 		</>

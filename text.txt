@@ -35,3 +35,6 @@ Styling:
 -> singlepost mein author ka profile visit
 -> register mein organisation ka entry
 -> profile page mein organisation display
+-> create thread ka editor fix karna hai
+-> thread se profile visit karna hai
+-> post se author ka profile visit karna hai

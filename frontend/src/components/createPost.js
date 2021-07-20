@@ -12,6 +12,7 @@ import SendIcon from '@material-ui/icons/Send';
 import { useState, useEffect } from 'react';
 import Menu from '@material-ui/core/Menu';
 import { MenuItem } from '@material-ui/core';
+import {useHistory} from 'react-router-dom';
 
 // Axios
 
@@ -103,7 +104,9 @@ export default function CreatePost() {
         try {
             setFormData({
                 ...formData,
-                content: e.value.content.content[0].content.content[0].text
+                // content: e.value.content.content[0].content.content[0].text
+                content : e.value
+        
             })
             // data.set('content', e.value.content.content[0].content.content[0].text);
         } catch (e) {
@@ -114,6 +117,8 @@ export default function CreatePost() {
             })
             // data.set('content', "");
         }
+        console.log(e.value.textContent)
+        // console.log(e.value)
     }
 
     useEffect(()=>{
@@ -144,10 +149,13 @@ export default function CreatePost() {
             'null' } };
         axiosInstance.post('thread/', data).then((res) => {
           console.log(res.data);
+          history.push("/");
         }).catch((err) => {
           console.log(err);
         })
     }
+    
+    const history = useHistory();
 
   return (
     <React.Fragment>
@@ -169,76 +177,23 @@ export default function CreatePost() {
             onChange={onTitleChange}
           />
         </Grid>
-        {/* <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-          />
-        </Grid> */}
         <Grid item xs={12}>
             <div className="app">
-                <Editor
-                    tools={[
-                    [Bold, Italic, Underline],
-                    [Undo, Redo],
-                    [Link, Unlink],
-                    [AlignLeft, AlignCenter, AlignRight],
-                    [OrderedList, UnorderedList, Indent, Outdent],
-                    ]}
-                    contentStyle={{ height: 320, backgroundColor: '#ffffff'}}
-                    defaultContent="User shift-enter for new line :)"
-                    onChange={onContentChange}
-                    />
+              <Editor
+                tools={[
+                [Bold, Italic, Underline],
+                [Undo, Redo],
+                [Link, Unlink],
+                [AlignLeft, AlignCenter, AlignRight],
+                [OrderedList, UnorderedList, Indent, Outdent],
+                ]}
+                contentStyle={{ height: 320, backgroundColor: '#ffffff'}}
+                defaultContent="Use shift-enter for new line :)"
+                onChange={onContentChange}
+                  />
             </div>
         </Grid>
-        {/* <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-          />
-        </Grid> */}
-        {/* <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-          />
-        </Grid> */}
-        {/* <Grid item xs={12} sm={6}>
-          <TextField id="state" name="state" label="State/Province/Region" fullWidth />
-        </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-          />
-        </Grid> */}
-        <Grid item xs={12} sm={6}>
-            {/* <Button
-            variant="contained"
-            color="default"
-            className={classes.button}
-            startIcon={<CloudUploadIcon />}
-            >
-                Upload
-                <input 
-                    type="file"
-                />
-            </Button> */}
             <input id="media" name="media" type="file" onChange={onFileChange} />
         </Grid>
         <Grid>
@@ -255,17 +210,8 @@ export default function CreatePost() {
                 {topics.map((topic) => (
                     <MenuItem onClick={handleClose} id={topic.id} title={topic.title}>{topic.title}</MenuItem>
                 ))}
-            {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem> */}
             </Menu>
         </Grid>
-        {/* <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
-          />
-        </Grid> */}
       </Grid>
       <Grid item xs={12} sm={6}>
           <Button style={{color:"#e85a4f"}}

@@ -52,8 +52,6 @@ function Header(){
 	{
 		return (
 			<React.Fragment>
-				{/* <ThemeProvider theme={ theme }> */}
-				{/* <CssBaseline /> */}
 				<div className={classes.newTheme}>
 				<AppBar
 					position="static"
@@ -83,6 +81,7 @@ function Header(){
 							value={data.search}
 							onChange={(newValue) => setData({ search: newValue })}
 							onRequestSearch={() => goSearch(data.search)}
+              // style={{padding:theme.spacing(2)}}
 						/>
 						<Button
 							href="#"
@@ -98,16 +97,6 @@ function Header(){
 						>
 							Logout
 						</Button>
-            {/* <Button
-							href="#"
-							color="textColor"
-							variant="outlined"
-							className={classes.link}
-							component={NavLink}
-							to="/myprofile"
-						>
-					
-						</Button> */}
             <Button href="/myprofile" variant="outline">
               <PersonIcon style={{fontSize:'35', color:"#e85a4f"}}/>
             </Button>
